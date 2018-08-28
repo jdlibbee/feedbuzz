@@ -20,7 +20,7 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/feedbuzz";
 
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 var exphbs = require('express-handlebars');
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -32,24 +32,23 @@ app.get("/scrape", function (req, res) {
     axios.get("https://www.buzzfeednews.com/").then(function (response) {
         var $ = cheerio.load(response.data);
         var result = {};
-        $("article h2").each(function (i, element) {
-            result.title = $(this).children("a").text();
-            result.link = $(this).children("a").attr("href");
+        $("article").each(function (i, element) {
+            result.title = $(this).find("h2").children("a").text();
+            result.link = $(this).find("h2").children("a").attr("href");
+            result.byline = $(this).find("p").text();
+
+            db.Article.create(result).then(function (dbArticle) {
+                console.log(dbArticle);
+            }).catch(function (err) {
+                return res.json(err);
+            });
         }),
-            $("article p").each(function (i, element) {
-                result.byline = $(this).text();
-            })
-        db.Article.create(result).then(function (dbArticle) {
-            console.log(dbArticle);
-        }).catch(function (err) {
-            return res.jsson(err);
-        });
         res.send("scrape Complte");
     })
 });
 
 //updates article to save page
-app.get("/submit", function (req, res) {
+app.put("/submit", function (req, res) {
     var article = req.body._id;
     db.Article.update({ _id: article }, { $set: { "saved": true } }, function (err, saved) {
         if (err) {
@@ -90,5 +89,5 @@ app.delete("/saved/:id", function (req, res) {
 })
 
 app.listen(PORT, function () {
-    console.log(`App running on http://localhost.${PORT}`)
+    console.log(`App running on http://localhost:${PORT}`)
 })

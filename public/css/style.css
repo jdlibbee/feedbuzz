@@ -1,0 +1,19 @@
+#buzz{
+    height: 75%;
+    width: 75%;
+    margin: auto;
+    margin-left: 15%;
+}
+.cardTitle{
+height: 150px;
+}
+.card-title{
+    margin-top: 10px;   
+}
+.card-content{
+    margin: 20px;
+    height: 150px;
+}
+#note{
+    margin-left: 5px;
+}

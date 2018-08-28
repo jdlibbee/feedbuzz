@@ -3,8 +3,8 @@
         <div class="nav-wrapper indigo darken-4 white-text">
             <a href="#" class="brand-logo right">FeedBuzz!</a>
             <ul id="nave-mobile" class="left hide-on-med-and-down">
-                <li><a href="">Home</a></li>
-                <li><a href="">Saved Articles</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/saved">Saved Articles</a></li>
                 <li><a class="waves-effect waves-light btn amber"><i class="material-icons left">get_app</i>Get New Articles!</a></li>
                 <li><a class="waves-effect waves-light btn amber"><i class="material-icons left">leak_remove</i>Clear Articles!</a></li>
             </ul>
@@ -16,7 +16,7 @@
         <div class="container">
             <br>
             <br>
-            <img src="images/buzz.png" alt="intro" id="intro">
+            <img src="images/buzz.png" alt="buzz" id="buzz">
             <br>
             <br>
         </div>
@@ -24,21 +24,21 @@
     <div class="parallax"><img src="images/honecomb.jpg"></div>
 </div>
 <div class="container">
-    {{{#each article}}}
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card">
-                <nav>
-                    <div class="nav-wrapper indigo darken-4 white-text">
-                        <span class="card-title" href={{{this.link}}}>{{{this.title}}}</span>
-                        <a class="waves-effect waves-light btn amber">Save Article</a>
+    {{#each article}}
+        <div class="row">
+            <div class="col s12 m12">
+                <div class="card">
+                    <nav>
+                        <div class="nav-wrapper valign-wrapper center-align indigo darken-4 white-text cardTitle">
+                            <h2 class="card-title " href={{this.link}}>{{this.title}}</h2>
+                        </div>
+                    </nav>
+                    <div class="card-content">
+                        <p>{{this.byline}}</p>
+                        <a class="waves-effect waves-light btn amber right" id="saveArticle" data-id={{this._id}}>Save Article</a>
                     </div>
-                </nav>
-                <div class="card-content">
-                    <p>{{{this.byline}}}</p>
                 </div>
             </div>
-        </div>
     </div>
-    {{{/each}}}
+    {{/each}}
 </div>
