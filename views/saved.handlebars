@@ -43,26 +43,25 @@
             </div>
         </div>
     </div>
-
-    {{/each}}
-</div>
-<!-- Modal Structure -->
-<div id="modal1" class="modal bottom-sheet">
-    <div class="modal-content">
-        <h4>{{this.title}}</h4>
-        <p>{{this.notes}}</p>
-    </div>
-    <div class="row">
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="articleNote" class="materialize-textarea"></textarea>
-                    <label for="articleNote">Notes</label>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>{{this.title}}</h4>
+            <p>{{this.notes}}</p>
+        </div>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="articleNote" class="materialize-textarea"></textarea>
+                        <label for="articleNote">Notes</label>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="saveNote" data-id={{this._id}}>Save</a>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="saveNote" data-id={{this._id}}>Save</a>
-    </div>
+    {{/each}}
 </div>
