@@ -5,8 +5,7 @@
             <ul id="nave-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">Home</a></li>
                 <li><a href="/saved">Saved Articles</a></li>
-                <li><a class="waves-effect waves-light btn amber"><i class="material-icons left">get_app</i>Get New Articles!</a></li>
-                <li><a class="waves-effect waves-light btn amber"><i class="material-icons left">leak_remove</i>Clear Articles!</a></li>
+
             </ul>
         </div>
     </nav>
@@ -27,7 +26,7 @@
     {{#each article}}
     <div class="row">
         <div class="col s12 m12">
-            <div class="card">
+            <div id={{this._id}} class="card">
                 <nav>
                     <div class="nav-wrapper valign-wrapper center-align indigo darken-4 white-text cardTitle">
                         <h2 class="card-title " href={{this.link}}>{{this.title}}</h2>
@@ -35,11 +34,35 @@
                 </nav>
                 <div class="card-content">
                     <p>{{this.byline}}</p>
-                    <a class="waves-effect waves-light btn amber right" id="note">Remove From Saved</a>
-                    <a class="waves-effect waves-light btn amber right">Article Notes</a>
+                    <a class="waves-effect waves-light btn amber right" id="remove" data-id={{this._id}}>Remove From Saved</a>
+                    <!-- Modal Trigger -->
+                    <button data-target="modal1" class="btn modal-trigger waves-effect waves-light btn amber right" id="note" data-id={{this._id}}>Article
+                        Notes
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     {{/each}}
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h4>{{this.title}}</h4>
+        <p>{{this.notes}}</p>
+    </div>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="articleNote" class="materialize-textarea"></textarea>
+                    <label for="articleNote">Notes</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="saveNote" data-id={{this._id}}>Save</a>
+    </div>
 </div>

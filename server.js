@@ -28,7 +28,7 @@ app.set("view engine", "handlebars");
 
 require("./routes/htmlroutes")(app);
 
-app.get("/scrape", function (req, res) {
+app.get("/", function (req, res) {
     axios.get("https://www.buzzfeednews.com/").then(function (response) {
         var $ = cheerio.load(response.data);
         var result = {};
@@ -43,7 +43,7 @@ app.get("/scrape", function (req, res) {
                 return res.json(err);
             });
         }),
-        res.send("scrape Complte");
+            res.send("scrape Complete");
     })
 });
 
@@ -51,6 +51,18 @@ app.get("/scrape", function (req, res) {
 app.put("/submit", function (req, res) {
     var article = req.body._id;
     db.Article.update({ _id: article }, { $set: { "saved": true } }, function (err, saved) {
+        if (err) {
+            console.log(err);
+        } else (
+            console.log("Article Saved")
+        )
+    })
+});
+
+//removes article from save page
+app.put("/remove", function (req, res) {
+    var article = req.body._id;
+    db.Article.update({ _id: article }, { $set: { "saved": false } }, function (err, saved) {
         if (err) {
             console.log(err);
         } else (
@@ -68,7 +80,7 @@ app.get("/saved/:id", function (req, res) {
     });
 });
 //updates articles note with a new note. 
-app.get("/saved/:id", function (req, res) {
+app.post("/saved/:id", function (req, res) {
     db.Note.create(req.body).then(function (dbNote) {
         return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     }).then(function (dbArticle) {
